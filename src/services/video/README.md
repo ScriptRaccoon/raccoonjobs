@@ -46,5 +46,5 @@ Below you find instructions for the setup.
 ## Test the endpoint locally
 
 1. Inside the repository, run the script `pnpm start`.
-2. Make a POST request to `http://localhost:3000/update-video?videoID={VIDEO ID}` with a specified video ID and make sure to include the correct API key from the previous steps in the `x-api-key` header.
+2. Make a POST request to `http://localhost:3000/api/update-video-title?videoID=...` with a specified video ID as query parameter and make sure to include the correct API key from the previous steps in the `x-api-key` header.
 3. Verify that the video title has been updated.
