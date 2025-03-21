@@ -1,8 +1,10 @@
 import express from 'express'
-import { apiRouter } from './routers/api'
-import { authRouter } from './routers/auth'
 import { rateLimiter } from './middlewares/rateLimit'
 import { PORT, RATE_LIMIT } from './config/env'
+import { authMiddleware } from './middlewares/auth'
+import { updateVideoController } from './controllers/updateVideoController'
+import { showAuthURL } from './controllers/authUrlController'
+import { showToken } from './controllers/authCallbackController'
 
 const app = express()
 
@@ -18,9 +20,8 @@ app.get('/health', (_req, res) => {
 	res.send('Server is running')
 })
 
-app.use('/api', apiRouter)
-app.use('/auth', authRouter)
+app.get('/auth', showAuthURL)
+app.get('/auth/callback', showToken)
 
-app.post('/test', (req, res) => {
-	res.send('Hello World')
-})
+app.use('/api', authMiddleware)
+app.post('/api/update-video', updateVideoController)
