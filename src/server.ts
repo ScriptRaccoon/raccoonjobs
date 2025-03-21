@@ -24,4 +24,4 @@ app.get('/auth', getAuthURL)
 app.get('/auth/callback', getToken)
 
 app.use('/api', authMiddleware)
-app.post('/api/update-video', updateVideo)
+app.patch('/api/update-video', updateVideo)
