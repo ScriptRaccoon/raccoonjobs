@@ -11,7 +11,8 @@ export const getAuthURLHandler = async (_req: Request, res: Response) => {
 		scope: ['https://www.googleapis.com/auth/youtube'],
 	})
 
-	res.send(responseBodyWithURL(authUrl))
+	const html = responseBodyWithURL(authUrl)
+	res.status(200).send(html)
 }
 
 const responseBodyWithURL = (url: string) =>

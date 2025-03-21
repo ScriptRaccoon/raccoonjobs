@@ -15,6 +15,5 @@ export const updateVideoTitleHandler = async (req: Request, res: Response) => {
 	const { message, success } = await updateVideoTitle(String(videoID))
 
 	const statusCode = success ? 200 : 500
-
 	res.status(statusCode).send({ message })
 }
