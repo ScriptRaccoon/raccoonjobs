@@ -1,5 +1,5 @@
 import type { Response, Request } from 'express'
-import { updateVideoTitle } from '../services/updateVideo'
+import { updateVideoTitle } from '../services/video'
 
 /**
  * Handles the request to update a video's title.
