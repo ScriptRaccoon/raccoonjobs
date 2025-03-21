@@ -6,4 +6,4 @@ export const apiRouter = express.Router()
 
 apiRouter.use('/', authMiddleware)
 
-apiRouter.get('/update-video', updateVideoController)
+apiRouter.post('/update-video', updateVideoController)
