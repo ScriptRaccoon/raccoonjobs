@@ -1,6 +1,6 @@
 import { supportedLocales } from './config'
 import { getLocalizations, getNewTitle } from './utils'
-import { youtube, YouTubeVideo } from './youtubeClient'
+import { youtube, type YouTubeVideo } from './youtubeClient'
 
 /**
  * Updates the title of a YouTube video based on its view and like count.

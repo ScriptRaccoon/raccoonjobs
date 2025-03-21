@@ -1,9 +1,11 @@
 # Video service
 
-This service leverages a function that automatically updates the title of a specified YouTube video by including the current number of views and likes. The process involves:
+This service leverages a function (`updateVideoTitle`) that updates the title of a specified YouTube video by including the current number of views and likes. The process involves:
 
 -   Accessing the YouTube Data API to edit the video title
 -   Translating the title in several languages
+
+Below you find instructions for the setup.
 
 ## Setup on Google Cloud
 
@@ -30,16 +32,16 @@ This service leverages a function that automatically updates the title of a spec
 
 1. In the repository, create a copy `.env` of the file `.env.example`.
 2. Open the JSON file and copy the values of `client_id` and `client_secret` from the downloaded JSON file to the `.env` file.
-3. In the `.env` file, add `http://localhost:3000/auth/callback` as the redirect URI.
-4. Also add some random api key in the `API_KEY` variable. This will protect this service.
+3. Add `http://localhost:3000/auth/callback` as the redirect URI.
+4. Create a secure password for your own usage and save it in the `API_KEY` variable. This API key will protect your service once you deploy it.
 
 ## Retrieve the refresh token
 
 1. Inside the repository, run the script `pnpm start`.
 2. Open `http://localhost:3000/auth` and follow the link.
 3. Login with the account that manages your YouTube account. In case you have a brand account, you need to choose the brand account.
-4. After login, you will be redirected to `http://localhost:3000/auth/callback` and see a refresh token and access token. In case you already generated a refresh token which has not expired, it will not be included in the response.
-5. Copy the refresh token to the `.env` file. The file should now be complete.
+4. After login, you will be redirected to `http://localhost:3000/auth/callback` and see a refresh token and access token. Notice: In case you already generated a refresh token which has not expired, it will not be included in the response.
+5. Copy the refresh token to the `.env` file.
 
 ## Test the endpoint locally
 

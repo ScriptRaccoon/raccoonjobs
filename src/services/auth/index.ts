@@ -1,13 +1,8 @@
-import { config } from 'dotenv'
 import { google } from 'googleapis'
-
-config()
+import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '../../config/env'
 
 /**
  * Client to authenticate with the YouTube API.
+ * See {@link https://www.npmjs.com/package/googleapis}
  */
-export const oAuth2Client = new google.auth.OAuth2(
-	process.env.CLIENT_ID,
-	process.env.CLIENT_SECRET,
-	process.env.REDIRECT_URI,
-)
+export const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
