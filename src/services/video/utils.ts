@@ -6,8 +6,8 @@ import { defaultTemplate, supportedLocales, titleTemplates } from './config'
  * in a specified locale.
  */
 export function getNewTitle(locale: string, video: YouTubeVideo): string {
-	const views = String(video.statistics?.viewCount ?? '0')
-	const likes = String(video.statistics?.likeCount ?? '0')
+	const views = video.statistics?.viewCount ?? '0'
+	const likes = video.statistics?.likeCount ?? '0'
 	const titleTemplate = titleTemplates[locale] ?? defaultTemplate
 	return titleTemplate.replace('{views}', views).replace('{likes}', likes)
 }
@@ -19,11 +19,13 @@ function getDescription(locale: string, video: YouTubeVideo): string {
 	return video.localizations?.[locale]?.description ?? ''
 }
 
+type Localizations = Record<string, { title: string; description: string }>
+
 /**
  * Returns the localizations for a video in multiple languages.
  */
-export function getLocalizations(video: YouTubeVideo) {
-	const localizations: Record<string, { title: string; description: string }> = {}
+export function getLocalizations(video: YouTubeVideo): Localizations {
+	const localizations: Localizations = {}
 	for (const locale of supportedLocales) {
 		if (locale === video.snippet?.defaultLanguage) continue
 		localizations[locale] = {

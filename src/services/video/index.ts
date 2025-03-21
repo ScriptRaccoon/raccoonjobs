@@ -25,12 +25,13 @@ export async function updateVideoTitle(videoID: string): Promise<{
 }
 
 /**
- * Fetches all the required information about a video.
+ * Fetches the required information about a video.
  * See {@link https://developers.google.com/youtube/v3/docs/videos/list}
  */
 async function fetchVideoDetails(videoId: string): Promise<YouTubeVideo> {
 	const fields =
-		'items(id,snippet(title,categoryId,description,defaultAudioLanguage,defaultLanguage),statistics(viewCount,likeCount),localizations)'
+		'items(id,snippet(title,categoryId,description,defaultAudioLanguage,defaultLanguage),' +
+		'statistics(viewCount,likeCount),localizations)'
 
 	const response = await youtube.videos.list({
 		part: ['snippet', 'statistics', 'localizations'],
