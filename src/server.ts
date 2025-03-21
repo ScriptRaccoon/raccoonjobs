@@ -1,5 +1,6 @@
 import express from 'express'
 import { apiRouter } from './routers/api'
+import { authRouter } from './routers/auth'
 import { rateLimiter } from './middlewares/rateLimit'
 import { config } from 'dotenv'
 config()
@@ -20,6 +21,7 @@ app.get('/health', (_req, res) => {
 })
 
 app.use('/api', apiRouter)
+app.use('/auth', authRouter)
 
 app.post('/test', (req, res) => {
 	res.send('Hello World')
