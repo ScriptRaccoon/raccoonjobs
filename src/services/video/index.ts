@@ -1,5 +1,3 @@
-import { supportedLocales } from './config'
-import { getLocalizations, getNewTitle } from './utils'
 import { youtube, type YouTubeVideo } from './youtubeClient'
 
 /**
@@ -50,7 +48,7 @@ async function fetchVideoDetails(videoId: string): Promise<YouTubeVideo> {
 }
 
 /**
- * Updates the title of a video. Includes translations in multiple languages.
+ * Updates the title of a video.
  * See {@link https://developers.google.com/youtube/v3/docs/videos/update}
  */
 async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
@@ -58,17 +56,13 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 		throw new Error('Snippet is missing.')
 	}
 
-	const { title, categoryId, description, defaultAudioLanguage, defaultLanguage } = video.snippet
+	const { title, categoryId, description } = video.snippet
 
 	const oldTitle = title ?? ''
 
 	console.info(`Old title: ${oldTitle}`)
 
-	if (!defaultLanguage) {
-		throw new Error('Default language is missing.')
-	}
-
-	const newTitle = getNewTitle(defaultLanguage, video)
+	const newTitle = getNewTitle(video)
 
 	if (title === newTitle) {
 		console.info('Title is already up to date.')
@@ -80,13 +74,10 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 	const requestBody = {
 		id: video.id,
 		snippet: {
-			title: getNewTitle(defaultLanguage, video),
+			title: newTitle,
 			categoryId,
 			description,
-			defaultAudioLanguage,
-			defaultLanguage,
 		},
-		localizations: getLocalizations(video),
 	}
 
 	await youtube.videos.update({
@@ -94,7 +85,17 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 		requestBody,
 	})
 
-	console.info(`Title has been updated in ${supportedLocales.length} languages.`)
+	console.info(`Title has been updated.`)
 
 	return { message: 'Title updated' }
+}
+
+/**
+ * Returns the new title for the video. Since the video
+ * is in German, the title is in German as well.
+ */
+function getNewTitle(video: YouTubeVideo): string {
+	const views = video.statistics?.viewCount ?? '0'
+	const likes = video.statistics?.likeCount ?? '0'
+	return `Dieses Video hat ${views} Aufrufe und ${likes} Likes! (Tutorial)`
 }

@@ -1,9 +1,6 @@
 # Video service
 
-This service leverages a function (`updateVideoTitle`) that updates the title of a specified YouTube video by including the current number of views and likes. The process involves:
-
--   Accessing the YouTube Data API to edit the video title
--   Translating the title in several languages
+This service leverages a function (`updateVideoTitle`) that updates the title of a specified YouTube video by including the current number of views and likes. It uses the YouTube Data API to edit the video title.
 
 Below you find instructions for the setup.
 
