@@ -2,10 +2,10 @@ import type { Response, Request } from 'express'
 import { oAuth2Client } from '../services/auth'
 
 /**
- * Handles the request to show the authentication URL for the YouTube API.
+ * Handles the request to get the authentication URL for the YouTube API.
  * See {@link https://www.npmjs.com/package/googleapis}
  */
-export const showAuthURL = async (_req: Request, res: Response) => {
+export const getAuthURL = async (_req: Request, res: Response) => {
 	const authUrl = oAuth2Client.generateAuthUrl({
 		access_type: 'offline',
 		scope: ['https://www.googleapis.com/auth/youtube'],

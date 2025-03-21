@@ -4,7 +4,7 @@ import { updateVideoTitle } from '../services/video'
 /**
  * Handles the request to update a video's title.
  */
-export const updateVideoController = async (req: Request, res: Response) => {
+export const updateVideo = async (req: Request, res: Response) => {
 	const videoID = req.query.videoID
 
 	if (!videoID) {

@@ -4,11 +4,11 @@ import { oAuth2Client } from '../services/auth'
 const CONNECTION_URL = 'https://myaccount.google.com/connections'
 
 /**
- * Handles the request to show the access and refresh token
+ * Handles the request to get the access and refresh token
  * based on the code received from the OAuth2 callback.
  * See {@link https://www.npmjs.com/package/googleapis}
  */
-export const showToken = async (req: Request, res: Response) => {
+export const getToken = async (req: Request, res: Response) => {
 	const code = req.query.code as string
 	try {
 		const { tokens } = await oAuth2Client.getToken(code)
