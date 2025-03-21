@@ -10,6 +10,7 @@ export async function updateVideoTitle(videoID: string): Promise<{
 	success: boolean
 }> {
 	try {
+		console.info('---')
 		console.info(`Searching for video with ID ${videoID} ...`)
 		const video = await fetchVideoDetails(videoID)
 
@@ -17,9 +18,11 @@ export async function updateVideoTitle(videoID: string): Promise<{
 
 		const { message } = await updateTitle(video)
 
+		console.info('---')
 		return { message, success: true }
 	} catch (error) {
 		console.error('Update failed:', error)
+		console.info('---')
 		return { message: 'Update failed', success: false }
 	}
 }
