@@ -11,4 +11,8 @@ app.listen(PORT, () => {
 	console.info(`Server is running on port ${PORT}`)
 })
 
+app.get('/health', (_req, res) => {
+	res.send('Server is running')
+})
+
 app.use('/api', apiRouter)
