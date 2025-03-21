@@ -12,12 +12,9 @@ export const updateVideoController = async (req: Request, res: Response) => {
 		return
 	}
 
-	const { message, oldTitle, newTitle } = await updateVideoTitle(String(videoID))
+	const { message, success } = await updateVideoTitle(String(videoID))
 
-	if (!newTitle) {
-		res.status(500).send({ error: 'Error updating video' })
-		return
-	}
+	const statusCode = success ? 200 : 500
 
-	res.send({ message, oldTitle, newTitle })
+	res.status(statusCode).send({ message })
 }

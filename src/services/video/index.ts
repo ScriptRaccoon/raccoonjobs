@@ -7,8 +7,7 @@ import { youtube, YouTubeVideo } from './youtubeClient'
  */
 export async function updateVideoTitle(videoID: string): Promise<{
 	message: string
-	oldTitle: string | null
-	newTitle: string | null
+	success: boolean
 }> {
 	try {
 		console.info(`Searching for video with ID ${videoID} ...`)
@@ -16,12 +15,12 @@ export async function updateVideoTitle(videoID: string): Promise<{
 
 		console.info('Video found.')
 
-		const { message, oldTitle, newTitle } = await updateTitle(video)
+		const { message } = await updateTitle(video)
 
-		return { message, oldTitle, newTitle }
+		return { message, success: true }
 	} catch (error) {
-		console.error('Error updating video:', error)
-		return { message: 'Video could not be updated', oldTitle: null, newTitle: null }
+		console.error('Update failed:', error)
+		return { message: 'Update failed', success: false }
 	}
 }
 
@@ -49,11 +48,8 @@ async function fetchVideoDetails(videoId: string): Promise<YouTubeVideo> {
 /**
  * Updates the title of a video. Includes translations in multiple languages.
  * See {@link https://developers.google.com/youtube/v3/docs/videos/update}
- * Returns the new default title if the title has been updated successfully.
  */
-async function updateTitle(
-	video: YouTubeVideo,
-): Promise<{ message: string; oldTitle: string; newTitle: string }> {
+async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 	if (!video.snippet) {
 		throw new Error('Snippet is missing.')
 	}
@@ -72,7 +68,7 @@ async function updateTitle(
 
 	if (title === newTitle) {
 		console.info('Title is already up to date.')
-		return { message: 'Title is already up to date', oldTitle, newTitle }
+		return { message: 'Title is already up to date' }
 	}
 
 	console.info(`New title: ${newTitle}`)
@@ -96,5 +92,5 @@ async function updateTitle(
 
 	console.info(`Title has been updated in ${supportedLocales.length} languages.`)
 
-	return { message: 'Title has been updated', oldTitle, newTitle }
+	return { message: 'Title updated' }
 }
