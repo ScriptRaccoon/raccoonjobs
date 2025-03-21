@@ -1,10 +1,10 @@
 import type { Response, Request } from 'express'
-import { updateVideoTitle } from './updateVideo'
+import { updateVideoTitle } from '../services/updateVideo'
 
 /**
  * Handles the request to update a video's title.
  */
-export const updateVideoHandler = async (req: Request, res: Response) => {
+export const updateVideoController = async (req: Request, res: Response) => {
 	const videoID = req.query.videoID
 
 	if (!videoID) {
