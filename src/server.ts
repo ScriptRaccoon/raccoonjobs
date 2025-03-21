@@ -20,3 +20,7 @@ app.get('/health', (_req, res) => {
 })
 
 app.use('/api', apiRouter)
+
+app.post('/test', (req, res) => {
+	res.send('Hello World')
+})
