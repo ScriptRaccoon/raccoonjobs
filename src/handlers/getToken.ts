@@ -1,5 +1,5 @@
 import type { Response, Request } from 'express'
-import { oAuth2Client } from '../services/auth'
+import { oAuth2Client } from '../services/auth/oAuth2Client'
 
 const CONNECTION_URL = 'https://myaccount.google.com/connections'
 
@@ -8,7 +8,7 @@ const CONNECTION_URL = 'https://myaccount.google.com/connections'
  * based on the code received from the OAuth2 callback.
  * See {@link https://www.npmjs.com/package/googleapis}
  */
-export const getToken = async (req: Request, res: Response) => {
+export const getTokenHandler = async (req: Request, res: Response) => {
 	const code = req.query.code as string
 	try {
 		const { tokens } = await oAuth2Client.getToken(code)

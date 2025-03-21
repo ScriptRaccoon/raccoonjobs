@@ -2,9 +2,9 @@ import express from 'express'
 import { rateLimiter } from './middlewares/rateLimit'
 import { PORT, RATE_LIMIT } from './config/env'
 import { authMiddleware } from './middlewares/auth'
-import { updateVideo } from './handlers/updateVideo'
-import { getAuthURL } from './handlers/getAuthURL'
-import { getToken } from './handlers/getToken'
+import { updateVideoTitleHandler } from './handlers/updateVideo'
+import { getAuthURLHandler } from './handlers/getAuthURL'
+import { getTokenHandler } from './handlers/getToken'
 
 const app = express()
 
@@ -20,8 +20,8 @@ app.get('/health', (_req, res) => {
 	res.send('Server is running')
 })
 
-app.get('/auth', getAuthURL)
-app.get('/auth/callback', getToken)
+app.get('/auth', getAuthURLHandler)
+app.get('/auth/callback', getTokenHandler)
 
 app.use('/api', authMiddleware)
-app.patch('/api/update-video', updateVideo)
+app.patch('/api/update-video-title', updateVideoTitleHandler)
