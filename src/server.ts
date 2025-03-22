@@ -1,10 +1,8 @@
 import express from 'express'
-import { rateLimiter } from './middlewares/rateLimit'
-import { PORT, RATE_LIMIT } from './config/env'
-import { authMiddleware } from './middlewares/auth'
-import { updateVideoTitleHandler } from './handlers/updateVideo'
-import { getAuthURLHandler } from './handlers/getAuthURL'
-import { getTokenHandler } from './handlers/getToken'
+import { PORT, RATE_LIMIT } from './env'
+import { authMiddleware, rateLimiter } from './middleware'
+import { getAuthURLHandler, getTokenHandler } from './auth'
+import { updateVideoTitleHandler } from './youtube'
 
 const app = express()
 

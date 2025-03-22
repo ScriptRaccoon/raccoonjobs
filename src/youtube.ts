@@ -1,9 +1,44 @@
-import { youtube, type YouTubeVideo } from './youtubeClient'
+import type { Response, Request } from 'express'
+import { google, type youtube_v3 } from 'googleapis'
+import { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } from './env'
+
+/**
+ * Client to authenticate with the YouTube API.
+ * See {@link https://www.npmjs.com/package/googleapis}
+ */
+const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+
+oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
+
+/**
+ * YouTube client to interact with the YouTube API.
+ * See {@link https://www.npmjs.com/package/googleapis}
+ */
+const youtube = google.youtube({ version: 'v3', auth: oAuth2Client })
+
+type YouTubeVideo = youtube_v3.Schema$Video
+
+/**
+ * Handles the request to update a video's title.
+ */
+export const updateVideoTitleHandler = async (req: Request, res: Response) => {
+	const videoID = req.query.videoID
+
+	if (!videoID) {
+		res.status(400).send({ error: 'Missing video ID' })
+		return
+	}
+
+	const { message, success } = await updateVideoTitle(String(videoID))
+
+	const statusCode = success ? 200 : 500
+	res.status(statusCode).send({ message })
+}
 
 /**
  * Updates the title of a YouTube video based on its view and like count.
  */
-export async function updateVideoTitle(videoID: string): Promise<{
+async function updateVideoTitle(videoID: string): Promise<{
 	message: string
 	success: boolean
 }> {
