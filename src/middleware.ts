@@ -7,10 +7,12 @@ import { API_KEY } from './env'
  */
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 	const apiKey = req.header('x-api-key')
-	if (apiKey === API_KEY) {
+
+	if (apiKey == API_KEY) {
 		next()
 	} else {
-		res.status(401).send('Unauthorized')
+		const msg = apiKey ? 'Invalid API key' : 'API key is missing'
+		res.status(401).send(msg)
 	}
 }
 
