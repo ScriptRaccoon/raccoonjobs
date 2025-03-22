@@ -56,7 +56,7 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 		throw new Error('Snippet is missing.')
 	}
 
-	const { title, categoryId, description } = video.snippet
+	const { title, categoryId, description, defaultLanguage, defaultAudioLanguage } = video.snippet
 
 	const oldTitle = title ?? ''
 
@@ -77,6 +77,8 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 			title: newTitle,
 			categoryId,
 			description,
+			defaultLanguage,
+			defaultAudioLanguage,
 		},
 	}
 
