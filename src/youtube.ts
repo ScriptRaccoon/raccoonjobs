@@ -100,8 +100,10 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 	const newTitle = getNewTitle(video)
 
 	if (title === newTitle) {
-		console.info('Title is already up to date.')
-		return { message: 'Title is already up to date' }
+		const message = 'Title is already up to date.'
+		console.info(message)
+
+		return { message }
 	}
 
 	console.info(`New title: ${newTitle}`)
@@ -124,7 +126,8 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 
 	console.info(`Title has been updated.`)
 
-	return { message: 'Title updated' }
+	const message = `Title has been updated from '${oldTitle}' to '${newTitle}'.`
+	return { message }
 }
 
 /**
