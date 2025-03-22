@@ -32,10 +32,10 @@ export async function updateVideoTitle(videoID: string): Promise<{
 async function fetchVideoDetails(videoId: string): Promise<YouTubeVideo> {
 	const fields =
 		'items(id,snippet(title,categoryId,description,defaultAudioLanguage,defaultLanguage),' +
-		'statistics(viewCount,likeCount),localizations)'
+		'statistics(viewCount,likeCount))'
 
 	const response = await youtube.videos.list({
-		part: ['snippet', 'statistics', 'localizations'],
+		part: ['snippet', 'statistics'],
 		id: [videoId],
 		fields,
 	})
@@ -83,7 +83,7 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 	}
 
 	await youtube.videos.update({
-		part: ['snippet', 'localizations'],
+		part: ['snippet'],
 		requestBody,
 	})
 
