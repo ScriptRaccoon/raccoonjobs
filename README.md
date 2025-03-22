@@ -1,6 +1,6 @@
 # Raccoon Jobs
 
-This is a web service that leverages various endpoints that are called regularly via <https://cron-job.org>.
+This is a web service that leverages various endpoints that are called regularly via cron jobs (for example, via cron-jobs.org or via Google Apps Script).
 
 ## Setup of the repository
 
