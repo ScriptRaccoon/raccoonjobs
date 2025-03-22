@@ -1,6 +1,6 @@
 # Raccoon Jobs
 
-This is a web service that leverages various endpoints that are called regularly via cron jobs.
+This is a web service that leverages various endpoints that are called regularly via cron jobs. I have created this in particular to regularly update a YouTube video's title (see below).
 
 ## Setup of the repository
 
@@ -18,9 +18,11 @@ Run `pnpm dev` to start the application and automatically restart when changes a
 
 ### `/api/update-video-title`
 
-This endpoint automatically updates the title of a specified YouTube video by including the current number of views and likes.
+This endpoint updates the title of a specified YouTube video by including the current number of views and likes, such as
 
-Below you find instructions for the setup. (These will also be used for a tutorial on my YouTube channel.)
+> This video has 451 views and 24 likes
+
+It is intended to be run regularly. Below you find instructions for the setup. (These will also be used for a tutorial on my YouTube channel.)
 
 #### Setup on Google Cloud
 
