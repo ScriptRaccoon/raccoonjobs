@@ -20,7 +20,7 @@ Run `pnpm dev` to start the application and automatically restart when changes a
 
 This endpoint automatically updates the title of a specified YouTube video by including the current number of views and likes.
 
-Below you find instructions for the setup.
+Below you find instructions for the setup. (These will also be used for a tutorial on my YouTube channel.)
 
 #### Setup on Google Cloud
 
@@ -63,3 +63,34 @@ Below you find instructions for the setup.
 1. Inside the repository, run the script `pnpm start`.
 2. Make a PATCH request to `http://localhost:3000/api/update-video-title?videoID=...` with a specified video ID as query parameter and make sure to include the correct API key from the previous steps in the `x-api-key` header.
 3. Verify that the video title has been updated.
+
+#### Deploy this Node.js app
+
+Choose any service you like (VPS, Render.com, etc.). You could theoretically even put the Node.js app inside of a SvelteKit project and deploy it to Netlify or Vercel.
+
+#### Create the cron job
+
+One option which costs no money is to create a Google Apps Script (other options have shown to be either not reliable or costing money).
+
+1. Create a new script by opening `script.new` and insert the following script.
+
+```js
+function updateVideoTitle() {
+	const videoID = '...' // enter your video ID
+	const url = `.../api/update-video-title?videoID=${videoID}` // add your deployment URL
+	const res = UrlFetchApp.fetch(url, {
+		method: 'PATCH',
+		headers: {
+			'x-api-key': '...', // set your API key
+		},
+	})
+	const txt = res.getContentText()
+	console.log(txt)
+}
+```
+
+2. In the UI, execute the function once and follow the instructions to authenticate the script.
+
+3. Finally, set a [trigger](https://developers.google.com/apps-script/guides/triggers/installable) that runs the function every, say, 10 minutes.
+
+You cannot let it run every 5 minutes: The YouTube Data API allows 10000 quotas for free per day, and one execution of the job requires 51 quotas (namely, 1 for reading the video, and 50 for updating the video), see [Quota Calculator](https://developers.google.com/youtube/v3/determine_quota_cost). This gives a minimal interval of every 7.344 minutes.
