@@ -1,6 +1,6 @@
 # Raccoon Jobs
 
-This is a web service that leverages various endpoints that are called regularly via cron jobs. I have created this in particular to regularly update a YouTube video's title (see below).
+This is a web service that leverages various endpoints that are called regularly via cron jobs. I have created this in particular to regularly update a [YouTube video's](https://youtu.be/wCnpZxrTyWQ) title.
 
 ## Setup of the repository
 
