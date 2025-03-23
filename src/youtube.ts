@@ -43,19 +43,19 @@ async function updateVideoTitle(videoID: string): Promise<{
 	success: boolean
 }> {
 	try {
-		console.info('---')
-		console.info(`Searching for video with ID ${videoID} ...`)
+		console.info('------------')
+		console.info(`updateVideoTitle called with videoID ${videoID} ...`)
 		const video = await fetchVideoDetails(videoID)
 
 		console.info('Video found.')
 
 		const { message } = await updateTitle(video)
 
-		console.info('---')
+		console.info('------------')
 		return { message, success: true }
 	} catch (error) {
 		console.error('Update failed:', error)
-		console.info('---')
+		console.info('------------')
 		return { message: 'Update failed', success: false }
 	}
 }
@@ -100,7 +100,7 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 	const newTitle = getNewTitle(video)
 
 	if (title === newTitle) {
-		const message = 'Title is already up to date.'
+		const message = `Title '${oldTitle}' is already up to date.`
 		console.info(message)
 
 		return { message }
@@ -131,7 +131,7 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 }
 
 /**
- * Returns the new title for the video. Since the video
+ * Returns the new title for the video. Since my video
  * is in German, the title is in German as well.
  */
 function getNewTitle(video: YouTubeVideo): string {
