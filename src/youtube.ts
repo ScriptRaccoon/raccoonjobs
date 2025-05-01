@@ -29,34 +29,39 @@ export const updateVideoTitleHandler = async (req: Request, res: Response) => {
 		return
 	}
 
-	const { message, success } = await updateVideoTitle(String(videoID))
+	const { success, oldTitle, newTitle } = await updateVideoTitle(String(videoID))
 
-	const statusCode = success ? 200 : 500
-	res.status(statusCode).send({ message })
+	if (success) {
+		res.status(200).send({ oldTitle, newTitle })
+	} else {
+		res.status(500).send({ error: 'Failed to update video title' })
+	}
 }
 
 /**
  * Updates the title of a YouTube video based on its view and like count.
  */
 async function updateVideoTitle(videoID: string): Promise<{
-	message: string
 	success: boolean
+	oldTitle?: string
+	newTitle?: string
 }> {
+	console.info('------------')
+	console.info(`updateVideoTitle called with videoID ${videoID} ...`)
+
 	try {
-		console.info('------------')
-		console.info(`updateVideoTitle called with videoID ${videoID} ...`)
 		const video = await fetchVideoDetails(videoID)
 
 		console.info('Video found.')
 
-		const { message } = await updateTitle(video)
+		const { oldTitle, newTitle } = await updateTitle(video)
 
 		console.info('------------')
-		return { message, success: true }
+		return { success: true, oldTitle, newTitle }
 	} catch (error) {
 		console.error('Update failed:', error)
 		console.info('------------')
-		return { message: 'Update failed', success: false }
+		return { success: false }
 	}
 }
 
@@ -86,7 +91,7 @@ async function fetchVideoDetails(videoId: string): Promise<YouTubeVideo> {
  * Updates the title of a video.
  * See {@link https://developers.google.com/youtube/v3/docs/videos/update}
  */
-async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
+async function updateTitle(video: YouTubeVideo): Promise<{ oldTitle: string; newTitle: string }> {
 	if (!video.snippet) {
 		throw new Error('Snippet is missing.')
 	}
@@ -100,10 +105,9 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 	const newTitle = getNewTitle(video)
 
 	if (title === newTitle) {
-		const message = `Title '${oldTitle}' is already up to date.`
-		console.info(message)
+		console.info(`Title '${oldTitle}' is already up to date.`)
 
-		return { message }
+		return { oldTitle, newTitle }
 	}
 
 	console.info(`New title: ${newTitle}`)
@@ -126,8 +130,7 @@ async function updateTitle(video: YouTubeVideo): Promise<{ message: string }> {
 
 	console.info(`Title has been updated.`)
 
-	const message = `Title has been updated from '${oldTitle}' to '${newTitle}'.`
-	return { message }
+	return { oldTitle, newTitle }
 }
 
 /**
